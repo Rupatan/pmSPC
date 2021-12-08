@@ -1,0 +1,121 @@
+﻿<Window x:Class="pmSPC.View.TaskView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pmSPC.View"
+        xmlns:vm="clr-namespace:pmSPC.ViewModel"
+        xmlns:controls="clr-namespace:pmSPC.Controls"
+             xmlns:conv="clr-namespace:pmSPC.Conv"
+  
+        mc:Ignorable="d"
+        Title="TaskView" 
+        SizeToContent="Height"
+        Width="350">
+    <Window.Resources>
+        <vm:TaskVM x:Key="model"/>
+        <conv:IsFoundBoolenConv x:Key="conv"/>
+    </Window.Resources>
+    <DockPanel DataContext="{Binding Source={StaticResource model}}">
+        <Grid Width="Auto" DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <DockPanel LastChildFill="True" HorizontalAlignment="Stretch" Grid.Column="0" Margin="2">
+                <Label Content="Номер" DockPanel.Dock="Left" Target="{Binding ElementName=Number}"/>
+                <TextBox DockPanel.Dock="Left"
+                         x:Name="Number"
+                         IsReadOnly="True"
+                        Text="{Binding Path=ObjectModel.Number, Mode=TwoWay, UpdateSourceTrigger=Default}" 
+                        HorizontalAlignment="Stretch"
+                        Width="Auto"/>
+            </DockPanel>
+            <DockPanel LastChildFill="True" Width="Auto" HorizontalAlignment="Stretch" Grid.Column="1" Margin="2">
+                <Label Content="Дата" DockPanel.Dock="Left"/>
+                <DatePickerTextBox Text="{Binding Path=ObjectModel.Date, Mode=TwoWay, UpdateSourceTrigger=Default, StringFormat={}{0:dd.MM.yyyy}}" IsReadOnly="True" VerticalContentAlignment="Center"/>
+            </DockPanel>
+        </Grid>
+        <Label Content="Описание" Target="{Binding ElementName=Name}" DockPanel.Dock="Top" />
+        <TextBox x:Name="Name" IsReadOnly="True"
+                 Text="{Binding Path=ObjectModel.Name, Mode=TwoWay}"
+            Height="Auto" 
+            MinHeight="60"
+            DockPanel.Dock="Top"
+             TextWrapping="Wrap"
+             VerticalScrollBarVisibility="Visible"
+             AcceptsReturn="True"/>
+        <DockPanel DockPanel.Dock="Top">
+            <DockPanel LastChildFill="True" DockPanel.Dock="Left" HorizontalAlignment="Left" >
+                <Label Content="Факт" Target="{Binding ElementName=LeadTime}"/>
+                <TextBox
+                HorizontalAlignment="Left"
+                    x:Name="LeadTime" 
+                     Text="{Binding Path=ObjectModel.LeadTime, Mode=TwoWay}"
+                     Width="35"
+                     MaxLength="5"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True" DockPanel.Dock="Left"  >
+                <Label Content="Исполнитель" Target="{Binding ElementName=Executor}" DockPanel.Dock="Left"/>
+                <!--<TextBox x:Name="Executor"
+                HorizontalAlignment="Stretch"
+                     Text="{Binding Path=ObjectModel.Executor, Mode=TwoWay}"
+                     Width="Auto"
+                     />-->
+
+                <ComboBox IsEditable="True" 
+                          IsTextSearchEnabled="True"
+                          ItemsSource="{Binding ListPositions}" 
+                          SelectedItem="{Binding ObjectModel.Executor}"
+                          DisplayMemberPath="Name"
+                          x:Name="Executor">
+
+                </ComboBox>
+
+                <!--<controls:TextBoxDropDownHintControl x:Name="Executor"
+			ItemsSource="{Binding ListPositions}"
+			HorizontalAlignment="Stretch"
+			SelectedValuePath="Id"
+			DisplayMemberPath="Name"
+			OnSelect="TextBoxDropDownHintControl_OnSelect"
+			Height="30" VerticalAlignment="Top">
+                </controls:TextBoxDropDownHintControl>-->
+
+            </DockPanel>
+        </DockPanel>
+
+        <DockPanel LastChildFill="True" DockPanel.Dock="Top" >
+            <Label Content="Решение" Target="{Binding ElementName=Comment}" DockPanel.Dock="Top"/>
+            <TextBox x:Name="Comment" 
+                 Text="{Binding Path=ObjectModel.Comment, Mode=TwoWay}"
+            Height="Auto" 
+                     MinHeight="60"
+            DockPanel.Dock="Top"
+             TextWrapping="Wrap"
+             VerticalScrollBarVisibility="Visible"
+             AcceptsReturn="True"/>
+        </DockPanel>
+
+        <DockPanel LastChildFill="True" DockPanel.Dock="Top">
+            <!--<CheckBox Content="Задача" DockPanel.Dock="Top" IsChecked="{Binding Path=ObjectModel.HaveTask, Mode=TwoWay}" />-->
+            <Label Content="Задача для руководителя" Target="{Binding ElementName=textSubtask}" DockPanel.Dock="Top"/>
+            <TextBox x:Name="textSubtask" 
+                 Text="{Binding Path=ObjectModel.TextSubtask, Mode=TwoWay}"
+                     Height="Auto" 
+                     MinHeight="60"
+            DockPanel.Dock="Top"
+             TextWrapping="Wrap"
+             VerticalScrollBarVisibility="Auto"
+             AcceptsReturn="True"
+                     AcceptsTab="True"/>
+
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch">
+            <Button Margin="2" Command="{Binding Path=CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Content="Закрыть" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+            <Button Margin="2" Command="{Binding Path=SaveCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" Content="Выполнить" DockPanel.Dock="Right" HorizontalAlignment="Right"/>
+
+        </DockPanel>
+    </DockPanel>
+</Window>
