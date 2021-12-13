@@ -10,125 +10,136 @@
         Title="MainWindow" Height="360" Width="360"
         xmlns:conv="clr-namespace:pmSPC.Conv"
         >
-    <Window.Resources>
-        <custom:WorkStationVM x:Key="ws"/>
-        <custom:TaskListVM x:Key="Task"/>
-        <conv:IsFoundBoolenConv x:Key="coverterIsFound"/>
-    </Window.Resources>
-    <Grid>
-        <TabControl TabStripPlacement="Left" IsEnabled="{Binding Source={StaticResource ws}, Path=IsShow}">
-            <TabControl.ItemContainerStyle>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="LayoutTransform">
-                        <Setter.Value>
-                            <RotateTransform Angle="270"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid x:Name="Panel">
-                                    <Border Name="Border" BorderBrush="Gray" BorderThickness="1" CornerRadius="6,6,6,6" Margin="2,2,2,4" Padding="0,0,0,4">
-                                        <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                        ContentSource="Header" Margin="12,2,12,2"/>
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True" >
-                                        <Trigger.Setters>
-                                            <Setter TargetName="Border" Property="Background" Value="#0B5FA5"/>
-                                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="White"/>
-                                        </Trigger.Setters>
-                                    </Trigger>
+  <Window.Resources>
+    <custom:WorkStationVM x:Key="ws"/>
+    <custom:TaskListVM x:Key="Task"/>
+    <conv:IsFoundBoolenConv x:Key="coverterIsFound"/>
+  </Window.Resources>
+  <Grid>
+    <TabControl TabStripPlacement="Left" IsEnabled="{Binding Source={StaticResource ws}, Path=IsShow}">
+      <TabControl.ItemContainerStyle>
+        <Style TargetType="{x:Type TabItem}">
+          <Setter Property="LayoutTransform">
+            <Setter.Value>
+              <RotateTransform Angle="270"/>
+            </Setter.Value>
+          </Setter>
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type TabItem}">
+                <Grid x:Name="Panel">
+                  <Border Name="Border" BorderBrush="Gray" BorderThickness="1" CornerRadius="6,6,6,6" Margin="2,2,2,4" Padding="0,0,0,4">
+                    <ContentPresenter x:Name="ContentSite"
+                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                    ContentSource="Header" Margin="12,2,12,2"/>
+                  </Border>
+                </Grid>
+                <ControlTemplate.Triggers>
+                  <Trigger Property="IsSelected" Value="True" >
+                    <Trigger.Setters>
+                      <Setter TargetName="Border" Property="Background" Value="#0B5FA5"/>
+                      <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="White"/>
+                    </Trigger.Setters>
+                  </Trigger>
 
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TabControl.ItemContainerStyle>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </TabControl.ItemContainerStyle>
 
-            <TabItem Header="Регистрация" DataContext="{Binding Source={StaticResource ws}}" >
-                <DockPanel >
-                    <DockPanel DockPanel.Dock="Top" Height="Auto" VerticalAlignment="Top">
-                        <Label DockPanel.Dock="Left" Content="Код:" 
-                               Grid.Column="0" 
-                               VerticalAlignment="Center"
-                               Margin="2" 
-                                Visibility="{Binding Converter={StaticResource coverterIsFound}, Path=IsFound, Mode=TwoWay}"/>
+      <TabItem Header="Регистрация " DataContext="{Binding Source={StaticResource ws}}" >
+        <DockPanel >
+          <DockPanel DockPanel.Dock="Top" Height="Auto" VerticalAlignment="Top">
+            <Label DockPanel.Dock="Left" Content="Код:"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Margin="2"
+                    Visibility="{Binding Converter={StaticResource coverterIsFound}, Path=IsFound, Mode=TwoWay}"/>
 
-                        <TextBox DockPanel.Dock="Left"
-                            x:Name="codeWS" 
-                             Grid.Column="1" 
-                             Grid.ColumnSpan="4"
-                             Text="{Binding Path=Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             VerticalAlignment="Center"
-                             Margin="2"
-                             Visibility="{Binding Converter={StaticResource coverterIsFound}, Path=IsFound, Mode=TwoWay}"/>
-                    </DockPanel>
-                    <DockPanel DockPanel.Dock="Top" LastChildFill="False" HorizontalAlignment="Stretch" Width="Auto" Height="Auto" VerticalAlignment="Top">
-                        <TextBlock TextWrapping="Wrap" DockPanel.Dock="Left" HorizontalAlignment="Stretch"
-                                   Visibility="{Binding Converter={StaticResource coverterIsFound}, Path=IsFound, ConverterParameter=true, Mode=TwoWay}">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}Контрагент: {0:S}&#x0a;Рабочее место: {1:S}&#x0a;Код рабочего места: {2:S}">
-                                    <Binding Path="Contragent"/>
-                                    <Binding Path="Name"/>
-                                    <Binding Path="Code"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <Button HorizontalAlignment="Stretch"
-                            Margin="2"  
-                                DockPanel.Dock="Right" 
-                                Content="{Binding SendButtonName}" 
-                                Command="{Binding SendCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                Height="24"
-                                Width="Auto"
-                                VerticalAlignment="Top"/>
+            <TextBox DockPanel.Dock="Left"
+                x:Name="codeWS"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="4"
+                 Text="{Binding Path=Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Center"
+                 Margin="2"
+                 Visibility="{Binding Converter={StaticResource coverterIsFound}, Path=IsFound, Mode=TwoWay}"/>
+          </DockPanel>
+          <Grid DockPanel.Dock="Top"
+                HorizontalAlignment="Stretch"
+                Width="Auto"
+                Height="Auto"
+                VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+              <ColumnDefenition Width="Auto"/>
+              <ColumnDefenition Width="Auto"/>
 
-                    </DockPanel>
+            </Grid.ColumnDefinitions>
+            <TextBlock TextWrapping="Wrap"
+                       Grid.Column="0"
+                       HorizontalAlignment="Stretch"
+                       Visibility="{Binding Converter={StaticResource coverterIsFound}, Path=IsFound, ConverterParameter=true, Mode=TwoWay}">
+              <TextBlock.Text>
+                <MultiBinding StringFormat="{}Контрагент: {0:S}&#x0a;Рабочее место: {1:S}&#x0a;Код рабочего места: {2:S}">
+                  <Binding Path="Contragent"/>
+                  <Binding Path="Name"/>
+                  <Binding Path="Code"/>
+                </MultiBinding>
+              </TextBlock.Text>
+            </TextBlock>
+            <Button HorizontalAlignment="Right"
+                    Grid.Column="1"
+                    Margin="2"
+                    DockPanel.Dock="Right"
+                    Content="{Binding SendButtonName}"
+                    Command="{Binding SendCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                    Height="24"
+                    VerticalAlignment="Top"/>
+          </Grid>
 
-                    <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsFound, Converter={StaticResource coverterIsFound}, ConverterParameter=true}" Margin="2,10,2,2">
-                        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                            <Button   Margin="2"
-                                DockPanel.Dock="Left" 
-                                Content="Регистрация компонентов" 
-                                HorizontalAlignment="Stretch" 
-                                Command="{Binding RegisterCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                Height="24" 
-                                VerticalAlignment="Top"/>
-                            <CheckBox Content="Крит. данные" VerticalAlignment="Center" DockPanel.Dock="Right" IsChecked="{Binding IsCriticalData, Mode=TwoWay}"/>
-                        </DockPanel>
-                        <GroupBox Header="Комментарии" Margin="2,2,2,2">
-                            <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-                                <DockPanel DockPanel.Dock="Top">
-                                    <Label Content="Администратор" 
-                                   DockPanel.Dock="Top"/>
-                                       <TextBox Text="{Binding CommentAdministrator, Mode=TwoWay}" 
-                                                   TextWrapping="Wrap" 
-                                       DockPanel.Dock="Top" 
-                                       HorizontalAlignment="Stretch"
-                                       Height="60" AcceptsReturn="True" AcceptsTab="True"/>
-                                 
-                                </DockPanel>
-                                <DockPanel DockPanel.Dock="Top">
-                                    <Label Content="Пользователь" 
-                                   DockPanel.Dock="Top"/>
-                                    <TextBox Text="{Binding CommentUser, Mode=TwoWay}" TextWrapping="Wrap" 
-                                       DockPanel.Dock="Top" 
-                                       HorizontalAlignment="Stretch"
-                                       Height="60" AcceptsReturn="True" AcceptsTab="True"/>
-                                    
-                                </DockPanel>
-                            </DockPanel>
-                        </GroupBox>
-                    </DockPanel>
+          <DockPanel DockPanel.Dock="Top" Visibility="{Binding IsFound, Converter={StaticResource coverterIsFound}, ConverterParameter=true}" Margin="2,10,2,2">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+              <Button   Margin="2"
+                  DockPanel.Dock="Left"
+                  Content="Регистрация компонентов"
+                  HorizontalAlignment="Stretch"
+                  Command="{Binding RegisterCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                  Height="24"
+                  VerticalAlignment="Top"/>
+              <CheckBox Content="Крит. данные" VerticalAlignment="Center" DockPanel.Dock="Right" IsChecked="{Binding IsCriticalData, Mode=TwoWay}"/>
+            </DockPanel>
+            <GroupBox Header="Комментарии" Margin="2,2,2,2">
+              <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                <DockPanel DockPanel.Dock="Top">
+                  <Label Content="Администратор"
+                 DockPanel.Dock="Top"/>
+                  <TextBox Text="{Binding CommentAdministrator, Mode=TwoWay}"
+                              TextWrapping="Wrap"
+                  DockPanel.Dock="Top"
+                  HorizontalAlignment="Stretch"
+                  Height="60" AcceptsReturn="True" AcceptsTab="True"/>
+
                 </DockPanel>
+                <DockPanel DockPanel.Dock="Top">
+                  <Label Content="Пользователь"
+                 DockPanel.Dock="Top"/>
+                  <TextBox Text="{Binding CommentUser, Mode=TwoWay}" TextWrapping="Wrap"
+                     DockPanel.Dock="Top"
+                     HorizontalAlignment="Stretch"
+                     Height="60" AcceptsReturn="True" AcceptsTab="True"/>
+
+                </DockPanel>
+              </DockPanel>
+            </GroupBox>
+          </DockPanel>
+        </DockPanel>
 
 
 
-                <!--<Grid>
+        <!--<Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -186,55 +197,55 @@
                     </TextBlock>
 
                 </Grid>-->
-            </TabItem>
+      </TabItem>
 
-            <TabItem x:Name="PageTaskList"
-                     IsEnabled="{Binding Source={StaticResource ws}, Path=IsFound, Mode=OneWay}"
-                Header="Задачи" 
-                DataContext="{Binding Source={StaticResource Task}}" >
+      <TabItem x:Name="PageTaskList"
+               IsEnabled="{Binding Source={StaticResource ws}, Path=IsFound, Mode=OneWay}"
+          Header="Задачи"
+          DataContext="{Binding Source={StaticResource Task}}" >
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
 
-                    </Grid.RowDefinitions>
-                    <ToolBar Grid.Row="0" >
-                        <Button Content="Обновить" Command="{Binding Path=RefreshCommand}"/>
-                        <Button Content="Изменить" 
-                                Command="{Binding Path=EditTaskCommand}" 
-                                CommandParameter="{Binding Path=SelectedItem}"/>
-                    </ToolBar>
-                    <ListView 
-                        Grid.Row="1"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ItemsSource="{Binding ListTask, Mode=TwoWay}" 
-                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                        Extension:ListViewColumns.Stretch="True"
+          </Grid.RowDefinitions>
+          <ToolBar Grid.Row="0" >
+            <Button Content="Обновить" Command="{Binding Path=RefreshCommand}"/>
+            <Button Content="Изменить"
+                    Command="{Binding Path=EditTaskCommand}"
+                    CommandParameter="{Binding Path=SelectedItem}"/>
+          </ToolBar>
+          <ListView
+              Grid.Row="1"
+              ScrollViewer.VerticalScrollBarVisibility="Auto"
+              ItemsSource="{Binding ListTask, Mode=TwoWay}"
+              SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+              Extension:ListViewColumns.Stretch="True"
                         >
 
-                        <ListView.Resources>
-                            <Style x:Key="itemstyle" TargetType="{x:Type ListViewItem}">
-                                <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
-                            </Style>
+            <ListView.Resources>
+              <Style x:Key="itemstyle" TargetType="{x:Type ListViewItem}">
+                <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
+              </Style>
 
-                        </ListView.Resources>
+            </ListView.Resources>
 
 
-                        <ListView.InputBindings>
-                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditTaskCommand}"/>
-                        </ListView.InputBindings>
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Номер" DisplayMemberBinding="{Binding Path=Number}" />
-                                <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=Date}"/>
-                                <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Path=Name}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
-            </TabItem>
-        </TabControl>
+            <ListView.InputBindings>
+              <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding EditTaskCommand}"/>
+            </ListView.InputBindings>
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="Номер" DisplayMemberBinding="{Binding Path=Number}" />
+                <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=Date}"/>
+                <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Path=Name}"/>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </Grid>
+      </TabItem>
+    </TabControl>
 
-    </Grid>
+  </Grid>
 </Window>
