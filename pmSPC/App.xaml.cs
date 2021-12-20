@@ -22,8 +22,8 @@ namespace pmSPC
         public static object lockObject = new object();
         public static string computerId = Other.ModelContext.getIdComputer();
         //public static readonly string URL = "http://95.79.48.85:8008/Torg83_Debug_DK/hs/pmSPC";
-        //public static readonly string URL = "http://95.79.48.85:8008/Torg83_debug_Alehin/hs/pmSPC";
-        public static readonly string URL = "http://95.79.48.85:8008/Torg83/hs/pmSPC";
+        public static readonly string URL = "http://95.79.48.85:8008/Torg83_debug_Alehin/hs/pmSPC";
+        //public static readonly string URL = "http://95.79.48.85:8008/Torg83/hs/pmSPC";
         public static WorkSatation workStation;
         public static string Login = "pmSPC";
         public static string Password = "Yggghjv1002!!!";

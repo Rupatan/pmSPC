@@ -107,7 +107,7 @@ namespace pmSPC.Model
         private bool haveTask = false;
 
         [JsonProperty("ЕстьЗадача")]
-        public bool HaveTask
+        public bool HaveTask 
         {
             get { return haveTask; }
             set
